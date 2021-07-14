@@ -134,14 +134,7 @@
                             </span>
                             <h4 class="text-section">MENU</h4>
                         </li>
-                        <li class="nav-item <?php if ($title == 'Data Pelanggan') {
-                                                echo 'active';
-                                            } ?>">
-                            <a href="pelanggan.php">
-                                <i class="fas fa-users"></i>
-                                <p>Pelanggan</p>
-                            </a>
-                        </li>
+                       
                         <li class="nav-item <?php if ($title == 'Data Pegawai') {
                                                 echo 'active';
                                             } ?>">
@@ -161,9 +154,9 @@
                         <li class="nav-item <?php if ($title == 'Data Paket') {
                                                 echo 'active';
                                             } ?>"">
-                            <a href=" paket.php">
+                            <a href=" absensi.php">
                             <i class="fas fa-box"></i>
-                            <p>Paket</p>
+                            <p>Absensi</p>
                             </a>
                         </li>
                         <li class="nav-item <?php if ($title == 'Data Transaksi') {

@@ -6,8 +6,8 @@ require 'header.php';
 setlocale(LC_ALL, 'id_id');
 setlocale(LC_TIME, 'id_ID.utf8');
 
-$query = mysqli_query($conn, "SELECT COUNT(id_transaksi) as jumlah_transaksi FROM transaksi");
-$jumlah_transaksi = mysqli_fetch_assoc($query);
+$query = mysqli_query($conn, "SELECT COUNT(id_user) as jumlah_user FROM user");
+$jumlah_user = mysqli_fetch_assoc($query);
 
 $query2 = mysqli_query($conn, "SELECT COUNT(id_pelanggan) as jumlah_pelanggan FROM pelanggan");
 $jumlah_pelanggan = mysqli_fetch_assoc($query2);
@@ -52,7 +52,7 @@ $penghasilan_minggu = mysqli_fetch_assoc($query7);
                         <div class="col col-stats ml-3 ml-sm-0">
                             <div class="numbers">
                                 <p class="card-category">Data Pegawai</p>
-                                <h4 class="card-title"><?= $jumlah_outlet['jumlah_outlet']; ?></h4>
+                                <h4 class="card-title"><?= $jumlah_user['jumlah_user']; ?></h4>
                             </div>
                         </div>
                     </div>

@@ -2,10 +2,12 @@
 $title = 'Data Pegawai';
 require 'koneksi.php';
 
-$data = mysqli_query($conn, 'SELECT * FROM user INNER JOIN outlet ON user.jabatan_id = outlet.id_jabatan ORDER BY role desc');
+
+$query = 'SELECT * FROM user INNER JOIN jabatan ON nama_jabatan=jabatan ORDER BY role desc';
+$data = mysqli_query($conn, $query);
 
 
-$query = 'SELECT user.id_user, outlet.id_outlet FROM user LEFT JOIN user ON user.jabatan_id = outlet.id_jabatan';
+
 
 require 'header.php';
 ?>

@@ -1,9 +1,13 @@
 <?php
-$title = 'Data Jabatan';
+$title = 'Data Paket';
 require 'koneksi.php';
 
-$query = 'SELECT jabatan.*, user.nama_user FROM jabatan LEFT JOIN user ON user.id_jabatan = jabatan.id_jabatan';
-$data = mysqli_query($conn, $query);
+
+$data = mysqli_query($conn, 'SELECT * FROM absensi INNER JOIN user ON user.id_user = absensi.id_absen ORDER BY role desc');
+
+
+
+
 
 require 'header.php';
 ?>
@@ -31,9 +35,9 @@ require 'header.php';
                 <div class="card-header">
                     <div class="d-flex align-items-center">
                         <h4 class="card-title"><?= $title; ?></h4>
-                        <a href="tambah_outlet.php" class="btn btn-primary btn-round ml-auto">
+                        <a href="tambah_paket.php" class="btn btn-primary btn-round ml-auto">
                             <i class="fa fa-plus"></i>
-                            Tambah Jabatan
+                            Tambah Absensi
                         </a>
                     </div>
                 </div>
@@ -43,10 +47,11 @@ require 'header.php';
                             <thead>
                                 <tr>
                                     <th style="width: 7%">#</th>
-                                    <th>Nama Jabatan</th>
-                                    <th>Golongan</th>
-                                    <th>Keterangan</th>
-                                    
+                                    <th>Nama</th>
+                                    <th>Hari, Tanggal</th>
+                                    <th>Jam Datang</th>
+                                    <th>Jam Pulang</th>
+                                    <th>Jam Kerja</th>
                                     <th style="width: 10%">Aksi</th>
                                 </tr>
                             </thead>
@@ -54,23 +59,25 @@ require 'header.php';
                                 <?php
                                 $no = 1;
                                 if (mysqli_num_rows($data) > 0) {
-                                    while ($jabatan = mysqli_fetch_assoc($data)) {
+                                    while ($absensi = mysqli_fetch_assoc($data)) {
                                 ?>
 
                                         <tr>
                                             <td><?= $no++; ?></td>
-                                            <td><?= $jabatan['nama_jabatan']; ?></td>
-                                          
-                                            <td><?= $jabatan['golongan']; ?></td>
-                                            <td>Rp. <?= $jabatan['tunjangan']; ?></td>
+                                            <td><?= $absensi['nama']; ?></td>
+                                            <td><?= $absensi['tanggal']; ?></td>
+                                            <td><?= $absensi['jam_datang']; ?></td>     
+                                             <td><?= $absensi['jam_pulang']; ?>
+                                             <td><?= $absensi['jam_kerja']; ?></td>
+                                            
                                             <td>
                                                 <div class="form-button-action">
-                                                    <a href="edit_outlet.php?id=<?= $outlet['id_outlet']; ?>" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit">
+                                                    <a href="edit_paket.php?id=<?= $paket['id_paket']; ?>" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit">
                                                         <i class="fa fa-edit"></i>
                                                     </a>
-                                                    <a href="hapus_outlet.php?id=<?= $outlet['id_outlet']; ?>" onclick="return confirm('Yakin hapus data?');" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Hapus">
+                                                    <!-- <a href="hapus_paket.php?id=<?= $paket['id_paket']; ?>" onclick="return confirm('Yakin hapus data?');" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Hapus">
                                                         <i class="fa fa-times"></i>
-                                                    </a>
+                                                    </a> -->
                                                 </div>
                                             </td>
                                         </tr>
