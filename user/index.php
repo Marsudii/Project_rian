@@ -1,12 +1,12 @@
 <?php
-$title = 'Selamat Datang di Aplikasi Pengelolaan Laundry';
+$title = 'Selamat Datang di Aplikasi Informasi Pegawai';
 require 'koneksi.php';
 require 'header.php';
 
 setlocale(LC_ALL, 'id_id');
 setlocale(LC_TIME, 'id_ID.utf8');
 
-$query = mysqli_query($conn, "SELECT COUNT(id_transaksi) as jumlah_transaksi FROM transaksi");
+$query = mysqli_query($conn, "SELECT COUNT(id_user) as jumlah_user FROM user");
 $jumlah_transaksi = mysqli_fetch_assoc($query);
 
 $query2 = mysqli_query($conn, "SELECT COUNT(id_pelanggan) as jumlah_pelanggan FROM pelanggan");
