@@ -2,23 +2,32 @@
 $title = 'Tambah Data Pegawai';
 require 'koneksi.php';
 
-$outlet = mysqli_query($conn, "SELECT * FROM outlet");
+$jabatan = mysqli_query($conn, "SELECT * FROM jabatan");
+
 if (isset($_POST['btn-simpan'])) {
-    $nama = $_POST['nama_user'];
-    $username = $_POST['username'];
-    $password = md5($_POST['password']);
-    $role = $_POST['role'];
-    $id_outlet = $_POST['id_outlet'];
-    $query = "INSERT INTO user (nama_user, username, password, role, outlet_id) values ('$nama', '$username', '$password', '$role', '$id_outlet')";
+    
+    $nama     = $_POST['nama_user'];
+    $nip    = $_POST['nip'];
+    $agama    = $_POST['agama'];
+    $jk         = $_POST['jk'];
+    $sk         = $_POST['sk'];
+    $alamat         = $_POST['alamat'];
+    $pendidikan         = $_POST['pendidikan'];
+    $username       = $_POST['username'];
+    $password       = md5($_POST['password']);
+    $role           = $_POST['role'];
+    $id_jabatan     = $_POST['id_jabatan'];
+    
+    $query = "INSERT INTO user (nama_user, nip, agama, jk, sk, alamat, pendidikan, username, password, role, id_jabatan) values ('$nama', '$nip', '$agama', '$jk', '$sk', '$alamat', '$pendidikan', '$username', '$password', '$role', '$id_jabatan')";
 
     $insert = mysqli_query($conn, $query);
     if ($insert == 1) {
 
         $_SESSION['msg'] = 'Berhasil menambahkan ' . $role . ' baru';
-        header('location:pengguna.php');
+        header('location:pegawai.php');
     } else {
         $_SESSION['msg'] = 'Gagal mengubah data!!!';
-        header('location: pengguna.php');
+        header('location: pegawai.php');
     }
 }
 
@@ -57,8 +66,8 @@ require 'header.php';
                     <form action="" method="POST">
                         <div class="card-body">
                         <div class="form-group">
-                                <label for="largeInput">Nip</label>
-                                <input type="text" name="nip" class="form-control form-control" id="defaultInput" placeholder="Masukan NIP...">
+                                <label for="largeInput">NIP</label>
+                                <input type="text" name="nip" class="form-control form-control" id="defaultInput" placeholder="Username...">
                             </div>
                             <div class="form-group">
                                 <label for="largeInput">Nama Pegawai</label>
@@ -66,34 +75,60 @@ require 'header.php';
                             </div>
                             <div class="form-group">
                                 <label for="defaultSelect">Jenis Kelamin</label>
-                                <select name="jk" class="form-control form-control" id="defaultSelect">
-                                    <option value="laki">Laki - Laki</option>
-                                    <option value="perempuan">Perempuan</option>
+                                <br>
+                                <input type="radio" name="jk" value="L">Laki - Laki </input>
+                                <br>
+                                <br>
+                                <input type="radio" name="jk" value="P"> Perempuan </input>
+                            </div>
+                            <div class="form-group">
+                                <label for="defaultSelect">Pendidikan</label>
+                                <select name="pendidikan" class="form-control form-control" id="defaultSelect">
+                                    <option value="SMK">SMK</option>
+                                    <option value="SMK">SMA</option>
+                                    <option value="Diploma 1">Diploma 1</option>
+                                    <option value="Diploma 1">Diploma 2</option>
+                                    <option value="Diploma 1">Diploma 3</option>
+                                    <option value="Diploma 1">Diploma 4</option>
+                                    <option value="Strata 1">Strata 1</option>
+                                    <option value="Strata 2">Strata 2</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="defaultSelect">Status Kepegawaian</label>
+                                <select name="sk" class="form-control form-control" id="defaultSelect">
+                                    <option value="Tetap">Tetap</option>
+                                    <option value="Kontrak">Kontrak</option>
+                                    <option value="Magang">Magang</option>
+                                    <option value="Freelance">Freelance</option>
+                                    <option value="Pensiun">Pensiun</option>
                                     
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="defaultSelect">Pilih Data Jabatan</label>
-                                <select name="id_pegawai" class="form-control form-control" id="defaultSelect">
-                                    <?php while ($key = mysqli_fetch_array($outlet)) { ?>
-                                        <option value="<?= $key['id_pegawai']; ?>"><?= $key['nama_jabatan']; ?></option>
-                                    <?php } ?>
+                                <label for="defaultSelect">Agama</label>
+                                <select name="agama" class="form-control form-control" id="defaultSelect">
+                                    <option value="Islam">Islam</option>
+                                    <option value="Hindu">Hindu</option>
+                                    <option value="Budha">Budha</option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="largeInput">Agama</label>
-                                <input type="text" name="agama" class="form-control form-control" id="defaultInput" placeholder="Agama...">
-                            </div>
-                            <div class="form-group">
-                                <label for="largeInput">Status Kepegawaian</label>
-                                <input type="text" name="sk" class="form-control form-control" id="defaultInput" placeholder="Status Kepegawaian...">
-                            </div>
-                            <div class="form-group">
                                 <label for="largeInput">Alamat</label>
-                                <input type="text" name="alamat" class="form-control form-control" id="defaultInput" placeholder="Masukan Alamat...">
+                                <textarea class="form-control" rows="5" name="alamat"></textarea>
                             </div>
+                            <div class="form-group">
+                                <label for="defaultSelect">Pilih Data Jabatan</label>
+                                <select name="id_jabatan" class="form-control form-control" id="defaultSelect">
+                                    <?php while ($key = mysqli_fetch_array($jabatan)) { ?>
+                                        <option value="<?= $key['id_jabatan']; ?>"><?= $key['nama_jabatan']; ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                          
                             <div class="form-group">
                                 <label for="largeInput">Username</label>
+                                
                                 <input type="text" name="username" class="form-control form-control" id="defaultInput" placeholder="Username...">
                             </div>
                             <div class="form-group">
@@ -104,8 +139,8 @@ require 'header.php';
                                 <label for="defaultSelect">Hak Akses</label>
                                 <select name="role" class="form-control form-control" id="defaultSelect">
                                     <option value="admin">Admin</option>
-                                    <option value="kasir">Pegawai</option>
-                                    <option value="owner">User</option>
+                                    <option value="pegawai">Pegawai</option>
+                                    <option value="user">User</option>
                                 </select>
                             </div>
                             

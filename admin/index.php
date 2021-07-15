@@ -9,23 +9,15 @@ setlocale(LC_TIME, 'id_ID.utf8');
 $query = mysqli_query($conn, "SELECT COUNT(id_user) as jumlah_user FROM user");
 $jumlah_user = mysqli_fetch_assoc($query);
 
-$query2 = mysqli_query($conn, "SELECT COUNT(id_pelanggan) as jumlah_pelanggan FROM pelanggan");
-$jumlah_pelanggan = mysqli_fetch_assoc($query2);
+$query = mysqli_query($conn, "SELECT COUNT(id_absen) as jumlah_absensi FROM absensi");
+$jumlah_absensi = mysqli_fetch_assoc($query);
 
-$query3 = mysqli_query($conn, "SELECT COUNT(id_outlet) as jumlah_outlet FROM outlet");
-$jumlah_outlet = mysqli_fetch_assoc($query3);
+$query = mysqli_query($conn, "SELECT COUNT(id_jabatan) as jumlah_jabatan FROM jabatan");
+$jumlah_jabatan = mysqli_fetch_assoc($query);
 
-$query4 = mysqli_query($conn, "SELECT SUM(total_harga) as total_penghasilan FROM detail_transaksi INNER JOIN transaksi ON transaksi.id_transaksi = detail_transaksi.id_transaksi WHERE status_bayar = 'dibayar'");
-$total_penghasilan = mysqli_fetch_assoc($query4);
+$query = mysqli_query($conn, "SELECT COUNT(id_gaji) as total_penghasilan FROM gaji");
+$total_penghasilan = mysqli_fetch_assoc($query);
 
-$query5 = mysqli_query($conn, "SELECT SUM(total_harga) as penghasilan_tahun FROM detail_transaksi INNER JOIN transaksi ON transaksi.id_transaksi = detail_transaksi.id_transaksi WHERE status_bayar = 'dibayar' AND YEAR(tgl_pembayaran) = YEAR(NOW())");
-$penghasilan_tahun = mysqli_fetch_assoc($query5);
-
-$query6 = mysqli_query($conn, "SELECT SUM(total_harga) as penghasilan_bulan FROM detail_transaksi INNER JOIN transaksi ON transaksi.id_transaksi = detail_transaksi.id_transaksi WHERE status_bayar = 'dibayar' AND MONTH(tgl_pembayaran) = MONTH(NOW())");
-$penghasilan_bulan = mysqli_fetch_assoc($query6);
-
-$query7 = mysqli_query($conn, "SELECT SUM(total_harga) as penghasilan_minggu FROM detail_transaksi INNER JOIN transaksi ON transaksi.id_transaksi = detail_transaksi.id_transaksi WHERE status_bayar = 'dibayar' AND WEEK(tgl_pembayaran) = WEEK(NOW())");
-$penghasilan_minggu = mysqli_fetch_assoc($query7);
 ?>
 
 <div class="panel-header bg-secondary-gradient">
@@ -70,8 +62,8 @@ $penghasilan_minggu = mysqli_fetch_assoc($query7);
                         </div>
                         <div class="col col-stats ml-3 ml-sm-0">
                             <div class="numbers">
-                                <p class="card-category">Data TPP</p>
-                                <h4 class="card-title"><?= $jumlah_pelanggan['jumlah_pelanggan']; ?></h4>
+                                <p class="card-category">Data Jabatan</p>
+                                <h4 class="card-title"><?= $jumlah_jabatan['jumlah_jabatan']; ?></h4>
                             </div>
                         </div>
                     </div>
@@ -90,14 +82,14 @@ $penghasilan_minggu = mysqli_fetch_assoc($query7);
                         <div class="col col-stats ml-3 ml-sm-0">
                             <div class="numbers">
                                 <p class="card-category">Absensi</p>
-                                <h4 class="card-title"><?= $jumlah_transaksi['jumlah_transaksi']; ?></h4>
+                                <h4 class="card-title"><?= $jumlah_absensi['jumlah_absensi']; ?></h4>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-       <!-- <div class="col-sm-6 col-md-3">
+       <div class="col-sm-6 col-md-3">
             <div class="card card-stats card-round">
                 <div class="card-body">
                     <div class="row align-items-center">
@@ -109,13 +101,13 @@ $penghasilan_minggu = mysqli_fetch_assoc($query7);
                       <div class="col col-stats ml-3 ml-sm-0">
                             <div class="numbers">
                                 <p class="card-category">Total Penghasilan</p>
-                                <h4 class="card-title"><?= 'Rp ' . number_format($total_penghasilan['total_penghasilan']); ?></h4>
+                                <h4 class="card-title"><?= $total_penghasilan['total_penghasilan']; ?></h4>
                             </div> 
                         </div>
                     </div>
                 </div>
             </div>
-        </div> -->
+        </div>
     </div>
 
 

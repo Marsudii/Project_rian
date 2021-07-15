@@ -120,7 +120,7 @@
                         </div>
                     </div>
                     <ul class="nav nav-primary">
-                        <li class="nav-item <?php if ($title == 'Selamat Datang di Aplikasi Pengelolaan Laundry') {
+                        <li class="nav-item <?php if ($title == 'Selamat Datang di Aplikasi Sistem Informasi Pegawai') {
                                                 echo 'active';
                                             } ?>">
                             <a href="index.php" class="collapsed" aria-expanded="false">
@@ -151,7 +151,7 @@
                             <p>Data Jabatan</p>
                             </a>
                         </li>
-                        <li class="nav-item <?php if ($title == 'Data Paket') {
+                        <li class="nav-item <?php if ($title == 'Data Absensi') {
                                                 echo 'active';
                                             } ?>"">
                             <a href=" absensi.php">
@@ -159,12 +159,12 @@
                             <p>Absensi</p>
                             </a>
                         </li>
-                        <li class="nav-item <?php if ($title == 'Data Transaksi') {
+                        <li class="nav-item <?php if ($title == 'Data Gaji') {
                                                 echo 'active';
                                             } ?>"">
-                            <a href=" transaksi.php">
+                            <a href=" data_gaji.php">
                             <i class="fas fa-hand-holding-usd"></i>
-                            <p>Transaksi</p>
+                            <p>Data Gaji</p>
                             </a>
                         </li>
                         <li class="nav-item <?php if ($title == 'Data Laporan') {

@@ -1,6 +1,6 @@
 <?php
 session_start();
-$conn = mysqli_connect("localhost", "root", "", "db_laundry");
+$conn = mysqli_connect("localhost", "root", "", "db_pegawai");
 
 $username = $_POST['username'];
 $password = md5($_POST['password']);
@@ -13,8 +13,8 @@ if ($cek > 0) {
     if ($data['role'] == 'admin') {
         $_SESSION['role'] = 'admin';
         $_SESSION['username'] = $data['username'];
-        $_SESSION['user_id'] = $data['id_user'];
-        $_SESSION['outlet_id'] = $data['outlet_id'];
+        $_SESSION['id_user'] = $data['id_user'];
+        $_SESSION['id_jabatan'] = $data['id_jabatan'];
         header('location:admin');
     } else if ($data['role'] == 'pegawai') {
         $_SESSION['role'] = 'pegawai';

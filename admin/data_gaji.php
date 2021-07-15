@@ -1,8 +1,8 @@
 <?php
-$title = 'Data Jabatan';
+$title = 'Data Gaji';
 require 'koneksi.php';
 
-$query = 'SELECT jabatan.*, user.nama_user FROM jabatan LEFT JOIN user ON user.id_jabatan = jabatan.id_jabatan';
+$query = "SELECT transaksi.*, pelanggan.nama_pelanggan, detail_transaksi.total_harga FROM transaksi INNER JOIN pelanggan ON pelanggan.id_pelanggan = transaksi.id_pelanggan INNER JOIN detail_transaksi ON detail_transaksi.id_transaksi = transaksi.id_transaksi";
 $data = mysqli_query($conn, $query);
 
 require 'header.php';
@@ -15,12 +15,9 @@ require 'header.php';
                 <h2 class="text-white pb-2 fw-bold">Dashboard</h2>
             </div>
         </div>
-        <?php if (isset($_SESSION['msg']) && $_SESSION['msg'] <> '') { ?>
-            <div class="alert alert-success" role="alert" id="msg">
-                <?= $_SESSION['msg']; ?>
-            </div>
-        <?php }
-        $_SESSION['msg'] = ''; ?>
+        <?php if (isset($_GET['msg'])) : ?>
+            <div class="alert alert-success" id="msg"><?= $_GET['msg'] ?></div>
+        <?php endif ?>
     </div>
 </div>
 <div class="page-inner mt--5">
@@ -31,9 +28,13 @@ require 'header.php';
                 <div class="card-header">
                     <div class="d-flex align-items-center">
                         <h4 class="card-title"><?= $title; ?></h4>
-                        <a href="tambah_jabatan.php" class="btn btn-primary btn-round ml-auto">
+                        <a href="cari.php" class="btn btn-primary btn-round ml-auto mr-2">
                             <i class="fa fa-plus"></i>
-                            Tambah Jabatan
+                            Tambah Transaksi
+                        </a>
+                        <a href="konfirmasi.php" class="btn btn-primary btn-round">
+                            <i class="fas fa-user-check"></i>
+                            Konfirmasi Pembayaran
                         </a>
                     </div>
                 </div>
@@ -43,33 +44,32 @@ require 'header.php';
                             <thead>
                                 <tr>
                                     <th style="width: 7%">#</th>
-                                    <th>Nama Jabatan</th>
-                                    <th>Golongan</th>
-                                    <th>Gaji</th>
-                                    
-                                    <th style="width: 10%">Aksi</th>
+                                    <th>Kode</th>
+                                    <th>Nama Pelanggan</th>
+                                    <th>Status</th>
+                                    <th>Pembayaran</th>
+                                    <th>Total</th>
+                                    <th style="width: 5%;">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
                                 $no = 1;
                                 if (mysqli_num_rows($data) > 0) {
-                                    while ($jabatan = mysqli_fetch_assoc($data)) {
+                                    while ($trans = mysqli_fetch_assoc($data)) {
                                 ?>
 
                                         <tr>
                                             <td><?= $no++; ?></td>
-                                            <td><?= $jabatan['nama_jabatan']; ?></td>
-                                          
-                                            <td><?= $jabatan['golongan']; ?></td>
-                                            <td>Rp. <?= $jabatan['gaji']; ?></td>
+                                            <td><?= $trans['kode_invoice']; ?></td>
+                                            <td><?= $trans['nama_pelanggan']; ?></td>
+                                            <td><?= $trans['status']; ?></td>
+                                            <td><?= $trans['status_bayar']; ?></td>
+                                            <td><?= 'Rp ' . number_format($trans['total_harga']); ?></td>
                                             <td>
                                                 <div class="form-button-action">
-                                                    <a href="edit_jabatan.php?id=<?= $jabatan['id_jabatan']; ?>" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit">
-                                                        <i class="fa fa-edit"></i>
-                                                    </a>
-                                                    <a href="hapus_jabatan.php?id=<?= $jabatan['id_jabatan']; ?>" onclick="return confirm('Yakin hapus data?');" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Hapus">
-                                                        <i class="fa fa-times"></i>
+                                                    <a href="detail.php?id=<?= $trans['id_transaksi']; ?>" type="button" data-toggle="tooltip" title="" class="btn btn-primary" data-original-title="Detail">
+                                                        <i class="far fa-eye"></i> Detail
                                                     </a>
                                                 </div>
                                             </td>

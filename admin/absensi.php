@@ -1,9 +1,13 @@
 <?php
-$title = 'Data Paket';
+$title = 'Data Absensi';
 require 'koneksi.php';
 
 
-$data = mysqli_query($conn, 'SELECT * FROM absensi INNER JOIN user ON user.id_user = absensi.id_absen ORDER BY role desc');
+$data = mysqli_query($conn, 'SELECT * FROM absensi JOIN user ON absensi.id_user = user.id_user ORDER BY role desc');
+
+$hitung = mysqli_query($conn, 'SELECT * FROM absensi');
+
+
 
 
 
@@ -35,9 +39,9 @@ require 'header.php';
                 <div class="card-header">
                     <div class="d-flex align-items-center">
                         <h4 class="card-title"><?= $title; ?></h4>
-                        <a href="tambah_paket.php" class="btn btn-primary btn-round ml-auto">
+                        <a href="tambah_absensi.php" class="btn btn-primary btn-round ml-auto">
                             <i class="fa fa-plus"></i>
-                            Tambah Absensi
+                            Tambah Absensi 
                         </a>
                     </div>
                 </div>
@@ -64,20 +68,34 @@ require 'header.php';
 
                                         <tr>
                                             <td><?= $no++; ?></td>
-                                            <td><?= $absensi['nama']; ?></td>
-                                            <td><?= $absensi['tanggal']; ?></td>
-                                            <td><?= $absensi['jam_datang']; ?></td>     
-                                             <td><?= $absensi['jam_pulang']; ?>
-                                             <td><?= $absensi['jam_kerja']; ?></td>
-                                            
-                                            <td>
+                                            <td><?= $absensi['nama_user']; ?></td>
+                                            <td><?php
+    $tanggal = $absensi['tanggal'];
+    echo tanggal_indo ($tanggal, true);
+?></td>
+                                            <td><?php $jamdatang = $absensi['jam_datang']; echo date("H:i", strtotime($jamdatang));?></td>     
+                                             <td><?php $jampulang = $absensi['jam_pulang']; echo date("H:i", strtotime($jampulang));?></td>
+                                             
+                                             <td><?php
+                                             $mulai=$jamdatang; //jam dalam format STRING
+                                             $selesai=$jampulang; //jam dalam format DATE real itme
+                                             $mulai_time=(is_string($mulai)?strtotime($mulai):$mulai);// memaksa mebentuk format time untuk string
+                                             $selesai_time=(is_string($selesai)?strtotime($selesai):$selesai);
+                                             $detik=$selesai_time-$mulai_time; //hitung selisih dalam detik
+                                             $jam=floor($detik/3600); // menghitung banyak jam
+                                             $sisadetik=$detik%3600; //sisa detik
+                                             $menit=floor($sisadetik/60);//menghitung banyak menit.
+                                             echo $jam.":".$menit;
+                                             ?> Jam
+                                             </td>
+                                             <td>
                                                 <div class="form-button-action">
-                                                    <a href="edit_paket.php?id=<?= $paket['id_paket']; ?>" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit">
+                                                    <a href="edit_absensi.php?id=<?= $absensi['id_absen']; ?>" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit">
                                                         <i class="fa fa-edit"></i>
                                                     </a>
-                                                    <!-- <a href="hapus_paket.php?id=<?= $paket['id_paket']; ?>" onclick="return confirm('Yakin hapus data?');" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Hapus">
+                                                    <a href="hapus_absensi.php?id=<?= $absensi['id_absen']; ?>" onclick="return confirm('Yakin hapus data?');" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Hapus">
                                                         <i class="fa fa-times"></i>
-                                                    </a> -->
+                                                    </a>
                                                 </div>
                                             </td>
                                         </tr>
